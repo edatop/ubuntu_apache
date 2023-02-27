@@ -1,0 +1,22 @@
+- hosts: ubuntu
+  tasks:
+  - name: Install the latest version of Apache
+    apt:
+      name: apache2
+      state: present
+      update_cache: yes
+
+  - name: Install apache unzip
+    apt:
+      name: unzip
+      state: present
+      update_cache: yes
+
+  - name: Unarchive a file that needs to be downloaded 
+    unarchive: 
+      src: https://www.free-css.com/assets/files/free-css-templates/download/page288/global.zip
+      dest: /tmp/
+      remote_src: yes
+
+  - name: Move template files to /var/www/html/
+    shell: "rm -rf /var/www/html/* && mv /tmp/global-master/*  /var/www/html/"
